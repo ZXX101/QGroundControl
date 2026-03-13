@@ -8,7 +8,16 @@
 ################################################################################
 
 QMAKE_PROJECT_DEPTH = 0 # undocumented qmake flag to force absolute paths in makefiles
-
+win32 {
+    QMAKE_CXXFLAGS += -execution-charset:utf-8
+    QMAKE_CXXFLAGS += -source_charset:utf-8
+}
+AndroidBuild {
+    QMAKE_CXXFLAGS += -Wno-deprecated-declarations
+}
+# WindowsBuild {
+#     QMAKE_CXXFLAGS += /WX- /W3
+# }
 # These are disabled until proven correct
 DEFINES += QGC_GST_TAISYNC_DISABLED
 DEFINES += QGC_GST_MICROHARD_DISABLED
@@ -54,6 +63,7 @@ LinuxBuild {
 WindowsBuild {
     RC_ICONS = resources/icons/qgroundcontrol.ico
     CONFIG += resources_big
+    CONFIG += c++14
 }
 
 #
@@ -1453,3 +1463,4 @@ LinuxBuild {
 
     INSTALLS += target share_qgroundcontrol share_icons share_metainfo share_applications
 }
+
