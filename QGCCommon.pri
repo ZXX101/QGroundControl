@@ -113,6 +113,25 @@ linux {
         error("Unsupported Mac toolchain, only 64-bit LLVM+clang is supported")
     }
 } else : ios {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     message("iOS build")
     CONFIG  += iOSBuild MobileBuild app_bundle
     CONFIG  -= bitcode
