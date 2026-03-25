@@ -19,6 +19,8 @@ import QGroundControl.MultiVehicleManager   1.0
 import QGroundControl.ScreenTools           1.0
 import QGroundControl.Controllers           1.0
 
+
+
 Rectangle {
     id:     _root
     color:  qgcPal.toolbarBackground
@@ -73,11 +75,15 @@ Rectangle {
         QGCToolBarButton {
             id:                     currentButton
             Layout.preferredHeight: viewButtonRow.height
-            icon.source:            "/res/QGCLogoFull"
-            logo:                   true
+            Layout.preferredWidth:  ScreenTools.defaultFontPixelWidth * 12
+            text:                   "GPS 导航模式"
+            font.family:            tecentfont.name
+            font.bold:              true
+            showIcon:               false
+            // icon.source:            "/res/QGCLogoFull"
+            // logo:                   true
             onClicked:              mainWindow.showToolSelectDialog()
         }
-
         MainStatusIndicator {
             Layout.preferredHeight: viewButtonRow.height
             visible:                currentToolbar === flyViewToolbar

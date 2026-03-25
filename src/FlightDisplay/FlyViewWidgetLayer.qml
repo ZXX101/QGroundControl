@@ -53,14 +53,15 @@ Item {
         leftEdgeTopInset:       toolStrip.leftEdgeTopInset
         leftEdgeCenterInset:    parentToolInsets.leftEdgeCenterInset
         leftEdgeBottomInset:    virtualJoystickMultiTouch.visible ? virtualJoystickMultiTouch.leftEdgeBottomInset : parentToolInsets.leftEdgeBottomInset
-        rightEdgeTopInset:      instrumentPanel.rightEdgeTopInset
+        // rightEdgeTopInset:      instrumentPanel.rightEdgeTopInset
         rightEdgeCenterInset:   (telemetryPanel.rightEdgeCenterInset > photoVideoControl.rightEdgeCenterInset) ? telemetryPanel.rightEdgeCenterInset : photoVideoControl.rightEdgeCenterInset
         rightEdgeBottomInset:   virtualJoystickMultiTouch.visible ? virtualJoystickMultiTouch.rightEdgeBottomInset : parentToolInsets.rightEdgeBottomInset
         topEdgeLeftInset:       toolStrip.topEdgeLeftInset
         topEdgeCenterInset:     mapScale.topEdgeCenterInset
-        topEdgeRightInset:      instrumentPanel.topEdgeRightInset
+        // topEdgeRightInset:      instrumentPanel.topEdgeRightInset
         bottomEdgeLeftInset:    virtualJoystickMultiTouch.visible ? virtualJoystickMultiTouch.bottomEdgeLeftInset : parentToolInsets.bottomEdgeLeftInset
-        bottomEdgeCenterInset:  telemetryPanel.bottomEdgeCenterInset
+        // bottomEdgeCenterInset:  telemetryPanel.bottomEdgeCenterInset
+        bottomEdgeCenterInset:  instrumentPanel.bottomEdgeCenterInset
         bottomEdgeRightInset:   virtualJoystickMultiTouch.visible ? virtualJoystickMultiTouch.bottomEdgeRightInset : parentToolInsets.bottomEdgeRightInset
     }
 
@@ -118,15 +119,19 @@ Item {
     FlyViewInstrumentPanel {
         id:                         instrumentPanel
         anchors.margins:            _toolsMargin
-        anchors.top:                multiVehiclePanelSelector.visible ? multiVehiclePanelSelector.bottom : parent.top
-        anchors.right:              parent.right
-        width:                      _rightPanelWidth
+        // anchors.top:                multiVehiclePanelSelector.visible ? multiVehiclePanelSelector.bottom : parent.top
+        anchors.bottom:              parent.bottom
+        anchors.horizontalCenter:   parent.horizontalCenter
+        width:                      _rightPanelWidth * 1.5
         spacing:                    _toolsMargin
         visible:                    QGroundControl.corePlugin.options.flyView.showInstrumentPanel && multiVehiclePanelSelector.showSingleVehiclePanel
-        availableHeight:            parent.height - y - _toolsMargin
+        // availableHeight:            parent.height - y - _toolsMargin
+        availableHeight:            y
 
         property real rightEdgeTopInset: visible ? parent.width - x : 0
         property real topEdgeRightInset: visible ? y + height : 0
+        property real bottomEdgetCenterInset: visible ? parent.height -y : 0
+
     }
 
     PhotoVideoControl {
@@ -152,7 +157,8 @@ Item {
                 AnchorChanges {
                     target:                 photoVideoControl
                     anchors.verticalCenter: undefined
-                    anchors.top:            instrumentPanel.bottom
+                    // anchors.top:            instrumentPanel.bottom
+                    anchors.top:            multiVehiclePanelSelector.visible?multiVehiclePanelSelector.bottom : parent.top
                 }
             }
         ]
@@ -164,7 +170,7 @@ Item {
         id:                 telemetryPanel
         x:                  recalcXPosition()
         anchors.margins:    _toolsMargin
-
+        visible:        false
         property real bottomEdgeCenterInset: 0
         property real rightEdgeCenterInset: 0
 
@@ -277,6 +283,7 @@ Item {
         z:                      QGroundControl.zOrderWidgets
         maxHeight:              parent.height - y - parentToolInsets.bottomEdgeLeftInset - _toolsMargin
         visible:                !QGroundControl.videoManager.fullScreen
+        // visible:                false
 
         onDisplayPreFlightChecklist: preFlightChecklistPopup.createObject(mainWindow).open()
 
@@ -301,7 +308,8 @@ Item {
         anchors.top:        parent.top
         mapControl:         _mapControl
         buttonsOnLeft:      true
-        visible:            !ScreenTools.isTinyScreen && QGroundControl.corePlugin.options.flyView.showMapScale && mapControl.pipState.state === mapControl.pipState.fullState
+        // visible:            !ScreenTools.isTinyScreen && QGroundControl.corePlugin.options.flyView.showMapScale && mapControl.pipState.state === mapControl.pipState.fullState
+        visible:            false
 
         property real topEdgeCenterInset: visible ? y + height : 0
     }

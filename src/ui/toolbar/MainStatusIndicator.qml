@@ -126,6 +126,7 @@ RowLayout {
         id:                     flightModeMenu
         Layout.preferredHeight: _root.height
         fontPointSize:          _vehicleInAir ?  ScreenTools.largeFontPointSize : ScreenTools.defaultFontPointSize
+        // visible:                false
         visible:                _activeVehicle
     }
 

@@ -711,6 +711,7 @@ FlightMap {
         mapControl:         _root
         buttonsOnLeft:      true
         visible:            !ScreenTools.isTinyScreen && QGroundControl.corePlugin.options.flyView.showMapScale && mapControl.pipState.state === mapControl.pipState.windowState
+        // visible:            false
 
         property real centerInset: visible ? parent.height - y : 0
     }

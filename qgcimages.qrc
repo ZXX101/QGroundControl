@@ -207,5 +207,29 @@
         <file alias="Yield.svg">src/ui/toolbar/Images/Yield.svg</file>
         <file alias="ZoomMinus.svg">src/FlightMap/Images/ZoomMinus.svg</file>
         <file alias="ZoomPlus.svg">src/FlightMap/Images/ZoomPlus.svg</file>
+        <file>resources/zxxAttitudeGround.png</file>
+        <file>resources/zxxAttitudeSky.png</file>
+        <file>resources/customFlyviewOverLay/locked.png</file>
+        <file>resources/customFlyviewOverLay/unlocked.png</file>
+        <file>resources/customFlyviewOverLay/电压.png</file>
+        <file>resources/customFlyviewOverLay/电压-1.png</file>
+        <file>resources/customFlyviewOverLay/电压2.png</file>
+        <file>resources/customFlyviewOverLay/电压2-1.png</file>
+        <file>resources/customFlyviewOverLay/返回.png</file>
+        <file>resources/customFlyviewOverLay/返回-1.png</file>
+        <file>resources/customFlyviewOverLay/高度.png</file>
+        <file>resources/customFlyviewOverLay/高度-1.png</file>
+        <file>resources/customFlyviewOverLay/关锁-1.png</file>
+        <file>resources/customFlyviewOverLay/降落.png</file>
+        <file>resources/customFlyviewOverLay/降落-1.png</file>
+        <file>resources/customFlyviewOverLay/距离.png</file>
+        <file>resources/customFlyviewOverLay/距离-1.png</file>
+        <file>resources/customFlyviewOverLay/起飞.png</file>
+        <file>resources/customFlyviewOverLay/起飞-1.png</file>
+        <file>resources/customFlyviewOverLay/锁-1.png</file>
+        <file>resources/customFlyviewOverLay/卫星 2.png</file>
+        <file>resources/customFlyviewOverLay/卫星 2-1.png</file>
+        <file>resources/customFlyviewOverLay/卫星.png</file>
+        <file>resources/customFlyviewOverLay/卫星-1.png</file>
     </qresource>
 </RCC>

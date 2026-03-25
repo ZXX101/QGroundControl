@@ -59,6 +59,7 @@ libs/thirdParty/libxbee/lib/
 GeneratedFiles/
 gstreamer-1.0-android*
 localization/qgroundcontrol/
+resources/unlockAnime/*.png
 
 *.autosave
 .settings/

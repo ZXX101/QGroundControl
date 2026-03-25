@@ -8,6 +8,7 @@ add_custom_target(FligthDisplayQml
 		FlightDisplayViewVideo.qml
 		FlightDisplayViewWidgets.qml
 		FlyViewCustomLayer.qml
+		FlyViewUnlockButton.qml
 		FlyViewInstrumentPanel.qml
 		FlyViewMap.qml
 		FlyViewMissionCompleteDialog.qml

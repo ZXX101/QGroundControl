@@ -26,6 +26,7 @@ Button {
     checkable:          false
 
     property bool logo: false
+    property bool showIcon: true
 
     property real _horizontalMargin: ScreenTools.defaultFontPixelWidth
 
@@ -38,25 +39,39 @@ Button {
         border.width:   QGroundControl.corePlugin.showTouchAreas ? 3 : 0
     }
 
-    contentItem: Row {
-        spacing:                ScreenTools.defaultFontPixelWidth
-        anchors.verticalCenter: button.verticalCenter
+    contentItem: Item {
+        anchors.fill: parent
+
         QGCColoredImage {
             id:                     _icon
+            visible:                showIcon && button.icon.source !== ""
+            anchors.left:           parent.left
+            anchors.verticalCenter: parent.verticalCenter
             height:                 ScreenTools.defaultFontPixelHeight * 2
             width:                  height
-            sourceSize.height:      parent.height
+            sourceSize.height:      height
             fillMode:               Image.PreserveAspectFit
             color:                  logo ? "transparent" : (button.checked ? qgcPal.buttonHighlightText : qgcPal.buttonText)
             source:                 button.icon.source
-            anchors.verticalCenter: parent.verticalCenter
         }
-        Label {
+
+        Text {
             id:                     _label
             visible:                text !== ""
             text:                   button.text
+            anchors.left:           _icon.visible ? _icon.right : parent.left
+            anchors.leftMargin:     _icon.visible ? ScreenTools.defaultFontPixelWidth : 0
+            anchors.right:          parent.right
+            anchors.top:            parent.top
+            anchors.bottom:         parent.bottom
+            font.family:            button.font.family
+            font.bold:              button.font.bold
+            font.pixelSize:         height * 0.6
+            fontSizeMode:           Text.Fit
+            minimumPixelSize:       8
+            horizontalAlignment:    Text.AlignHCenter
+            verticalAlignment:      Text.AlignVCenter
             color:                  button.checked ? qgcPal.buttonHighlightText : qgcPal.buttonText
-            anchors.verticalCenter: parent.verticalCenter
         }
     }
 }

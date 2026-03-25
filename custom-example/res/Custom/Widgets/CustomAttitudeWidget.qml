@@ -39,13 +39,22 @@ Item {
 
         //----------------------------------------------------
         //-- Artificial Horizon
+        // CustomArtificialHorizon {
+        //     rollAngle:          _rollAngle
+        //     pitchAngle:         _pitchAngle
+        //     skyColor1:          "#0a2e50"
+        //     skyColor2:          "#2f85d4"
+        //     groundColor1:       "#897459"
+        //     groundColor2:       "#4b3820"
+        //     anchors.fill:       parent
+        // }
         CustomArtificialHorizon {
             rollAngle:          _rollAngle
             pitchAngle:         _pitchAngle
-            skyColor1:          "#0a2e50"
-            skyColor2:          "#2f85d4"
-            groundColor1:       "#897459"
-            groundColor2:       "#4b3820"
+            skyColor1:          "#00000000"
+            skyColor2:          "#00000000"
+            groundColor1:       "#00000000"
+            groundColor2:       "#00000000"
             anchors.fill:       parent
         }
         //----------------------------------------------------

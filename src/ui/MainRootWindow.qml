@@ -23,6 +23,10 @@ import QGroundControl.FlightMap     1.0
 /// @brief Native QML top level window
 /// All properties defined here are visible to all QML pages.
 ApplicationWindow {
+    FontLoader {
+        id: tecentfont;
+        source: "qrc:/fonts/resources/fonts/tecentbold.ttf"
+    }
     id:             mainWindow
     minimumWidth:   ScreenTools.isMobile ? Screen.width  : Math.min(ScreenTools.defaultFontPixelWidth * 100, Screen.width)
     minimumHeight:  ScreenTools.isMobile ? Screen.height : Math.min(ScreenTools.defaultFontPixelWidth * 50, Screen.height)
