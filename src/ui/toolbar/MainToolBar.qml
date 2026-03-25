@@ -106,7 +106,8 @@ Rectangle {
         anchors.bottomMargin:   1
         anchors.top:            parent.top
         anchors.bottom:         parent.bottom
-        anchors.right:          parent.right
+        anchors.right:          customInfoBar.left
+        anchors.rightMargin:    ScreenTools.defaultFontPixelWidth
         contentWidth:           indicatorLoader.x + indicatorLoader.width
         flickableDirection:     Flickable.HorizontalFlick
 
@@ -119,6 +120,16 @@ Rectangle {
                                     "qrc:/toolbar/MainToolBarIndicators.qml" :
                                     (currentToolbar == planViewToolbar ? "qrc:/qml/PlanToolBarIndicators.qml" : "")
         }
+    }
+
+    // 自定义状态信息栏 - 右侧
+    MainToolBarCustomStatus {
+        id:                 customInfoBar
+        anchors.right:      parent.right
+        anchors.rightMargin: ScreenTools.defaultFontPixelWidth
+        anchors.top:        parent.top
+        anchors.bottom:     parent.bottom
+        visible:            currentToolbar === flyViewToolbar && _activeVehicle
     }
 
     //-------------------------------------------------------------------------

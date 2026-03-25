@@ -294,6 +294,7 @@
         <file alias="VehicleSummary.qml">src/VehicleSetup/VehicleSummary.qml</file>
         <file alias="QGroundControl/FlightDisplay/FlyViewCustomAnimMeter.qml">src/FlightDisplay/FlyViewCustomAnimMeter.qml</file>
         <file alias="QGroundControl/FlightDisplay/FlyViewCustomMultiIconWithLable.qml">src/FlightDisplay/FlyViewCustomMultiIconWithLable.qml</file>
+        <file alias="QGroundControl/Controls/MainToolBarCustomStatus.qml">src/ui/toolbar/MainToolBarCustomStatus.qml</file>
     </qresource>
     <qresource prefix="/FirstRunPromptDialogs">
         <file alias="OfflineVehicleFirstRunPrompt.qml">src/FirstRunPromptDialogs/OfflineVehicleFirstRunPrompt.qml</file>

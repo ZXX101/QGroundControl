@@ -1,0 +1,145 @@
+import QtQuick 2.11
+import QtQuick.Layouts 1.11
+
+import QGroundControl 1.0
+import QGroundControl.Controls 1.0
+import QGroundControl.ScreenTools 1.0
+import QGroundControl.Palette 1.0
+import QGroundControl.MultiVehicleManager 1.0
+
+Row {
+    id: root
+    spacing: ScreenTools.defaultFontPixelWidth
+
+    property var _activeVehicle: QGroundControl.multiVehicleManager.activeVehicle
+    property bool _isReturning: _activeVehicle ? (_activeVehicle.flightMode === _activeVehicle.rtlFlightMode || _activeVehicle.flightMode === _activeVehicle.smartRTLFlightMode) : false
+
+    // 卫星阈值配置
+    property int gpsThreshold: 6
+    property string gpsIconGood: "/qmlimages/Gps.svg"
+    property string gpsIconBad: "/qmlimages/Gps.svg"
+    property color gpsColorGood: "white"
+    property color gpsColorBad: "red"
+
+    // 电池阈值配置（电压，单位V）
+    property real voltageThreshold: 10.5
+    property string batteryIconGood: "/qmlimages/Battery.svg"
+    property string batteryIconBad: "/qmlimages/Battery.svg"
+    property color batteryColorGood: "white"
+    property color batteryColorBad: "red"
+
+    // 返航状态标签 + 分隔符
+    QGCLabel {
+        text: qsTr("返航中")
+        color: "orange"
+        font.bold: true
+        font.pointSize: ScreenTools.mediumFontPointSize
+        visible: _isReturning
+        anchors.verticalCenter: parent.verticalCenter
+    }
+
+    Rectangle {
+        width: 1
+        height: parent.height * 0.6
+        color: qgcPal.text
+        visible: _isReturning
+        anchors.verticalCenter: parent.verticalCenter
+    }
+
+    // 卫星图标 + 数量
+    Item {
+        width: gpsIcon.width + gpsValue.width + ScreenTools.defaultFontPixelWidth / 2
+        height: parent.height
+        visible: _activeVehicle
+
+        property int _gpsCount: _activeVehicle ? _activeVehicle.gps.count.value : 0
+        property bool _isGood: _gpsCount >= gpsThreshold
+
+        QGCColoredImage {
+            id: gpsIcon
+            width: height
+            height: parent.height * 0.6
+            anchors.left: parent.left
+            anchors.verticalCenter: parent.verticalCenter
+            source: parent._isGood ? gpsIconGood : gpsIconBad
+            fillMode: Image.PreserveAspectFit
+            color: parent._isGood ? gpsColorGood : gpsColorBad
+        }
+
+        QGCLabel {
+            id: gpsValue
+            anchors.left: gpsIcon.right
+            anchors.leftMargin: ScreenTools.defaultFontPixelWidth / 4
+            anchors.verticalCenter: parent.verticalCenter
+            text: parent._gpsCount.toString()
+            color: parent._isGood ? gpsColorGood : gpsColorBad
+            font.pointSize: ScreenTools.mediumFontPointSize
+        }
+    }
+
+    // 分隔符
+    Rectangle {
+        width: 1
+        height: parent.height * 0.6
+        color: qgcPal.text
+        visible: _activeVehicle
+        anchors.verticalCenter: parent.verticalCenter
+    }
+
+    // 电池图标 + 电压
+    Item {
+        width: batteryIcon.width + batteryValue.width + ScreenTools.defaultFontPixelWidth / 2
+        height: parent.height
+        visible: _activeVehicle && _activeVehicle.batteries.count > 0
+
+        property real _voltage: _activeVehicle && _activeVehicle.batteries.count > 0 ? _activeVehicle.batteries.get(0).voltage.rawValue : 0
+        property bool _isGood: _voltage >= voltageThreshold
+
+        QGCColoredImage {
+            id: batteryIcon
+            width: height
+            height: parent.height * 0.6
+            anchors.left: parent.left
+            anchors.verticalCenter: parent.verticalCenter
+            source: parent._isGood ? batteryIconGood : batteryIconBad
+            fillMode: Image.PreserveAspectFit
+            color: parent._isGood ? batteryColorGood : batteryColorBad
+        }
+
+        QGCLabel {
+            id: batteryValue
+            anchors.left: batteryIcon.right
+            anchors.leftMargin: ScreenTools.defaultFontPixelWidth / 4
+            anchors.verticalCenter: parent.verticalCenter
+            text: parent._voltage.toFixed(1) + "V"
+            color: parent._isGood ? batteryColorGood : batteryColorBad
+            font.pointSize: ScreenTools.mediumFontPointSize
+        }
+    }
+
+    // 分隔符
+    Rectangle {
+        width: 1
+        height: parent.height * 0.6
+        color: qgcPal.text
+        visible: _activeVehicle
+        anchors.verticalCenter: parent.verticalCenter
+    }
+
+    // 日期时间
+    QGCLabel {
+        text: Qt.formatDateTime(new Date(), "yyyy-MM-dd hh:mm:ss")
+        color: qgcPal.text
+        font.pointSize: ScreenTools.mediumFontPointSize
+        anchors.verticalCenter: parent.verticalCenter
+
+        Timer {
+            interval: 1000
+            running: true
+            repeat: true
+            onTriggered: parent.text = Qt.formatDateTime(new Date(), "yyyy-MM-dd hh:mm:ss")
+        }
+    }
+
+    QGCPalette { id: qgcPal }
+}
