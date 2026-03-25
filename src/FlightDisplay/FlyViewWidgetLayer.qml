@@ -139,7 +139,7 @@ Item {
         anchors.margins:        _toolsMargin
         anchors.right:          parent.right
         width:                  _rightPanelWidth
-
+        visible: false
         property real rightEdgeCenterInset: visible ? parent.width - x : 0
 
         state:                  _verticalCenter ? "verticalCenter" : "topAnchor"
@@ -276,15 +276,16 @@ Item {
 
     FlyViewToolStrip {
         id:                     toolStrip
+       width:0
+        height:0//直接visible：false会导致其他引用toolStrip的几何属性的地方崩溃，将宽高设为0 可以解决
         anchors.leftMargin:     _toolsMargin + parentToolInsets.leftEdgeCenterInset
         anchors.topMargin:      _toolsMargin + parentToolInsets.topEdgeLeftInset
         anchors.left:           parent.left
         anchors.top:            parent.top
         z:                      QGroundControl.zOrderWidgets
         maxHeight:              parent.height - y - parentToolInsets.bottomEdgeLeftInset - _toolsMargin
-        visible:                !QGroundControl.videoManager.fullScreen
-        // visible:                false
-
+        // visible:                !QGroundControl.videoManager.fullScreen
+        visible: true
         onDisplayPreFlightChecklist: preFlightChecklistPopup.createObject(mainWindow).open()
 
 

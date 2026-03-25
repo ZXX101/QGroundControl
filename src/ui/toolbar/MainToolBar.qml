@@ -84,9 +84,11 @@ Rectangle {
             // logo:                   true
             onClicked:              mainWindow.showToolSelectDialog()
         }
+        //飞行模式切换菜单
         MainStatusIndicator {
             Layout.preferredHeight: viewButtonRow.height
-            visible:                currentToolbar === flyViewToolbar
+            // visible:                currentToolbar === flyViewToolbar
+            visible: false
         }
 
         QGCButton {
@@ -126,11 +128,11 @@ Rectangle {
         anchors.top:            parent.top
         anchors.bottom:         parent.bottom
         anchors.margins:        ScreenTools.defaultFontPixelHeight * 0.66
-        visible:                currentToolbar !== planViewToolbar && _activeVehicle && !_communicationLost && x > (toolsFlickable.x + toolsFlickable.contentWidth + ScreenTools.defaultFontPixelWidth)
+        // visible:                currentToolbar !== planViewToolbar && _activeVehicle && !_communicationLost && x > (toolsFlickable.x + toolsFlickable.contentWidth + ScreenTools.defaultFontPixelWidth)
         fillMode:               Image.PreserveAspectFit
         source:                 _outdoorPalette ? _brandImageOutdoor : _brandImageIndoor
         mipmap:                 true
-
+        visible: false
         property bool   _outdoorPalette:        qgcPal.globalTheme === QGCPalette.Light
         property bool   _corePluginBranding:    QGroundControl.corePlugin.brandImageIndoor.length != 0
         property string _userBrandImageIndoor:  QGroundControl.settingsManager.brandImageSettings.userBrandImageIndoor.value

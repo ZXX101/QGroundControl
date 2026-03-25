@@ -25,7 +25,8 @@ Item {
     anchors.bottom: parent.bottom
     width:          batteryIndicatorRow.width
 
-    property bool showIndicator: true
+    property bool showIndicator: false
+    // property bool showIndicator: true
 
     property var _activeVehicle: QGroundControl.multiVehicleManager.activeVehicle
 
