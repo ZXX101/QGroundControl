@@ -133,8 +133,8 @@
 #include <sys/types.h>
 #endif
 #endif
-#include "Actuators/Actuators.h"
-#include "Actuators/ActuatorTesting.h"
+// #include "Actuators/Actuators.h"
+// #include "Actuators/ActuatorTesting.h"
 #include "QGCMapEngine.h"
 
 class FinishVideoInitialization : public QRunnable
@@ -471,9 +471,9 @@ void QGCApplication::_initCommon()
     qmlRegisterUncreatableType<RemoteIDManager>         (kQGCVehicle,                       1, 0, "RemoteIDManager",            kRefOnly);
     qmlRegisterUncreatableType<GimbalController>        (kQGCVehicle,                       1, 0, "GimbalController",           kRefOnly);
 
-    qmlRegisterUncreatableType<Actuators>                  (kQGCVehicle, 1, 0, "Actuators",              kRefOnly);
-    qmlRegisterUncreatableType<ActuatorTesting::ActuatorTest>(kQGCVehicle, 1, 0, "ActuatorTest",        kRefOnly);
-    qmlRegisterUncreatableType<ActuatorTesting::Actuator>  (kQGCVehicle, 1, 0, "Actuator",              kRefOnly);
+    // qmlRegisterUncreatableType<Actuators>                  (kQGCVehicle, 1, 0, "Actuators",              kRefOnly);
+    // qmlRegisterUncreatableType<ActuatorTesting::ActuatorTest>(kQGCVehicle, 1, 0, "ActuatorTest",        kRefOnly);
+    // qmlRegisterUncreatableType<ActuatorTesting::Actuator>  (kQGCVehicle, 1, 0, "Actuator",              kRefOnly);
 
     qmlRegisterUncreatableType<MissionController>       (kQGCControllers,                   1, 0, "MissionController",          kRefOnly);
     qmlRegisterUncreatableType<GeoFenceController>      (kQGCControllers,                   1, 0, "GeoFenceController",         kRefOnly);
