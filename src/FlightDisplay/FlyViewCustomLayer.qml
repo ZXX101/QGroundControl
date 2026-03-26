@@ -1,3 +1,5 @@
+
+
 /****************************************************************************
  *
  * (c) 2009-2020 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
@@ -6,7 +8,6 @@
  * COPYING.md in the root of the source code directory.
  *
  ****************************************************************************/
-
 import QGroundControl 1.0
 import QGroundControl.Controllers 1.0
 import QGroundControl.Controls 1.0
@@ -30,7 +31,8 @@ import QtQuick.Window 2.2
 Item {
     id: _root
 
-    property var parentToolInsets // These insets tell you what screen real estate is available for positioning the controls in your overlay
+    property var parentToolInsets
+    // These insets tell you what screen real estate is available for positioning the controls in your overlay
     property var totalToolInsets: _toolInsets // These are the insets for your custom overlay additions
     property var mapControl
     // 保存 actuatorTest 引用供 Timer 使用
@@ -38,21 +40,21 @@ Item {
 
     function mapPercentToValue(actuator, percent) {
         if (percent === 0)
-            return actuator.defaultValue;
+            return actuator.defaultValue
 
-        return actuator.min + (actuator.max - actuator.min) * (percent / 100);
+        return actuator.min + (actuator.max - actuator.min) * (percent / 100)
     }
 
     // 获取 actuatorTest 的函数
     function getActuatorTest() {
         if (!globals.activeVehicle)
-            return null;
+            return null
 
-        var actuators = globals.activeVehicle.actuators;
+        var actuators = globals.activeVehicle.actuators
         if (!actuators)
-            return null;
+            return null
 
-        return actuators.actuatorTest;
+        return actuators.actuatorTest
     }
 
     Timer {
@@ -62,14 +64,59 @@ Item {
         repeat: true
         running: false
         onTriggered: {
-            if (_currentActuatorTest && _currentActuatorTest.actuators.count > 0) {
+            if (_currentActuatorTest
+                    && _currentActuatorTest.actuators.count > 0) {
                 for (var i = 0; i < _currentActuatorTest.actuators.count; i++) {
-                    var actuator = _currentActuatorTest.actuators.get(i);
+                    var actuator = _currentActuatorTest.actuators.get(i)
                     if (actuator.isMotor) {
-                        var value = mapPercentToValue(actuator, globals.motorTestThrottle);
-                        _currentActuatorTest.setChannelTo(i, value);
+                        var value = mapPercentToValue(actuator,
+                                                      globals.motorTestThrottle)
+                        _currentActuatorTest.setChannelTo(i, value)
                     }
                 }
+            }
+        }
+    }
+
+    Timer {
+        id: motorTestCommandTimer
+
+        interval: 50
+        repeat: true
+        running: false
+        property int remainingTime: 0
+        property int currentMotor: 1
+        property int motorCount: 4
+        onTriggered: {
+            if (globals.activeVehicle && remainingTime > 0) {
+                globals.activeVehicle.motorTest(currentMotor, globals.motorTestThrottle, 1, true)
+                currentMotor++
+                if (currentMotor > motorCount) {
+                    currentMotor = 1
+                }
+                remainingTime -= interval
+                if (remainingTime <= 0) {
+                    stop()
+                    console.log("motorTest 定时器结束")
+                }
+            }
+        }
+    }
+
+    Timer {
+        id: motorTestShowSpeed
+
+        interval: 200
+        repeat: true
+        running: false
+        onTriggered: {
+            if (globals.activeVehicle && globals.activeVehicle.servoOutput) {
+                var servo1 = globals.activeVehicle.servoOutput.servo1Raw ? globals.activeVehicle.servoOutput.servo1Raw.rawValue : 0
+                var servo2 = globals.activeVehicle.servoOutput.servo2Raw ? globals.activeVehicle.servoOutput.servo2Raw.rawValue : 0
+                var servo3 = globals.activeVehicle.servoOutput.servo3Raw ? globals.activeVehicle.servoOutput.servo3Raw.rawValue : 0
+                var servo4 = globals.activeVehicle.servoOutput.servo4Raw ? globals.activeVehicle.servoOutput.servo4Raw.rawValue : 0
+
+                console.log("Servo Output (PWM us) - S1:", servo1, "S2:", servo2, "S3:", servo3, "S4:", servo4)
             }
         }
     }
@@ -119,8 +166,9 @@ Item {
         anchors.bottomMargin: 10
         totalDuration: 3000 // 3秒
         onStarted: {
-            console.log("开始长按解锁");
-            console.log("电机参数为：油门：", globals.motorTestThrottle, "时间：", globals.motorTestTime);
+            console.log("开始长按解锁")
+            console.log("电机参数为：油门：", globals.motorTestThrottle, "时间：",
+                        globals.motorTestTime)
         }
         onCancelled: console.log("取消解锁")
         onCompleted: {
@@ -134,24 +182,31 @@ Item {
             // console.log("_actuatorTest.actuators.count:", _actuatorTest ? _actuatorTest.actuators.count : "N/A");
             // console.log("===================");
             ///
-            var actuatorTest = getActuatorTest();
-            console.log("actuatorTest:", actuatorTest);
+            var actuatorTest = getActuatorTest()
+            console.log("actuatorTest:", actuatorTest)
             if (actuatorTest)
-                console.log("actuatorTest.actuators.count:", actuatorTest.actuators ? actuatorTest.actuators.count : "N/A");
+                console.log("actuatorTest.actuators.count:",
+                            actuatorTest.actuators ? actuatorTest.actuators.count : "N/A")
 
-            if (actuatorTest && actuatorTest.actuators && actuatorTest.actuators.count > 0) {
-                console.log("使用新版 actuators API");
-                _currentActuatorTest = actuatorTest;
-                actuatorTest.setActive(true);
-                motorTestRefreshTimer.start();
+            if (actuatorTest && actuatorTest.actuators
+                    && actuatorTest.actuators.count > 0) {
+                console.log("使用新版 actuators API")
+                _currentActuatorTest = actuatorTest
+                actuatorTest.setActive(true)
+                motorTestRefreshTimer.start()
+                motorTestShowSpeed.start()
             } else if (globals.activeVehicle) {
-                console.log("使用旧版 motorTest API");
-                var motorCount = globals.activeVehicle.motorCount > 0 ? globals.activeVehicle.motorCount : 4;
-                for (var i = 1; i <= motorCount; i++) {
-                    globals.activeVehicle.motorTest(i, globals.motorTestThrottle, globals.motorTestTime, true);
-                }
+                console.log("使用旧版 motorTest API")
+                var mCount = globals.activeVehicle.motorCount
+                        > 0 ? globals.activeVehicle.motorCount : 4
+                console.log("motorCount:", mCount, ", throttle:", globals.motorTestThrottle + "%", ", duration:", globals.motorTestTime + "s")
+                motorTestCommandTimer.motorCount = mCount
+                motorTestCommandTimer.currentMotor = 1
+                motorTestCommandTimer.remainingTime = globals.motorTestTime * 1000
+                motorTestCommandTimer.start()
+                motorTestShowSpeed.start()
             } else {
-                console.log("电机测试：未连接飞行器");
+                console.log("电机测试：未连接飞行器")
             }
         }
     }
@@ -169,20 +224,24 @@ Item {
         image1: "qrc:/qmlimages/resources/customFlyviewOverLay/起飞-1.png"
         image2: "qrc:/qmlimages/resources/customFlyviewOverLay/降落-1.png"
         onClicked: {
-            console.log("停止电机测试");
-            unlockButton.reset();
-            motorTestRefreshTimer.stop();
-            var actuatorTest = getActuatorTest();
+            console.log("停止电机测试")
+            unlockButton.reset()
+            motorTestRefreshTimer.stop()
+            motorTestCommandTimer.stop()
+            var actuatorTest = getActuatorTest()
             if (actuatorTest) {
-                actuatorTest.stopControl(-1);
-                actuatorTest.setActive(false);
+                actuatorTest.stopControl(-1)
+                actuatorTest.setActive(false)
+                motorTestShowSpeed.stop()
             } else if (globals.activeVehicle) {
-                var motorCount = globals.activeVehicle.motorCount > 0 ? globals.activeVehicle.motorCount : 4;
+                var motorCount = globals.activeVehicle.motorCount
+                        > 0 ? globals.activeVehicle.motorCount : 4
                 for (var i = 1; i <= motorCount; i++) {
-                    globals.activeVehicle.motorTest(i, 0, 0, true);
+                    globals.activeVehicle.motorTest(i, 0, 0, true)
                 }
+                motorTestShowSpeed.stop()
             }
-            _currentActuatorTest = null;
+            _currentActuatorTest = null
         }
     }
 
@@ -209,7 +268,7 @@ Item {
         image1: "qrc:/qmlimages/resources/customFlyviewOverLay/起飞-1.png"
         image2: "qrc:/qmlimages/resources/customFlyviewOverLay/降落-1.png"
         onClicked: {
-            console.log("起飞降落按钮点击：" + checked ? "起飞" : "降落");
+            console.log("起飞降落按钮点击：" + checked ? "起飞" : "降落")
         }
     }
 
@@ -226,7 +285,7 @@ Item {
         image1: "qrc:/qmlimages/resources/customFlyviewOverLay/返回-1.png"
         image2: "qrc:/qmlimages/resources/customFlyviewOverLay/返回-1.png"
         onClicked: {
-            console.log("返航按钮点击");
+            console.log("返航按钮点击")
         }
     }
 
@@ -247,5 +306,4 @@ Item {
         bottomEdgeCenterInset: parentToolInsets.bottomEdgeCenterInset
         bottomEdgeRightInset: parentToolInsets.bottomEdgeRightInset
     }
-
 }

@@ -38,6 +38,7 @@
 #include "VehicleTemperatureFactGroup.h"
 #include "VehicleVibrationFactGroup.h"
 #include "VehicleEscStatusFactGroup.h"
+#include "VehicleServoOutputFactGroup.h"
 #include "VehicleEstimatorStatusFactGroup.h"
 #include "VehicleHygrometerFactGroup.h"
 #include "VehicleLinkManager.h"
@@ -318,6 +319,7 @@ public:
     Q_PROPERTY(FactGroup*           clock           READ clockFactGroup             CONSTANT)
     Q_PROPERTY(FactGroup*           setpoint        READ setpointFactGroup          CONSTANT)
     Q_PROPERTY(FactGroup*           escStatus       READ escStatusFactGroup         CONSTANT)
+    Q_PROPERTY(FactGroup*           servoOutput     READ servoOutputFactGroup       CONSTANT)
     Q_PROPERTY(FactGroup*           estimatorStatus READ estimatorStatusFactGroup   CONSTANT)
     Q_PROPERTY(FactGroup*           terrain         READ terrainFactGroup           CONSTANT)
     Q_PROPERTY(FactGroup*           distanceSensors READ distanceSensorFactGroup    CONSTANT)
@@ -718,6 +720,7 @@ public:
     FactGroup* localPositionFactGroup       () { return &_localPositionFactGroup; }
     FactGroup* localPositionSetpointFactGroup() { return &_localPositionSetpointFactGroup; }
     FactGroup* escStatusFactGroup           () { return &_escStatusFactGroup; }
+    FactGroup* servoOutputFactGroup         () { return &_servoOutputFactGroup; }
     FactGroup* estimatorStatusFactGroup     () { return &_estimatorStatusFactGroup; }
     FactGroup* terrainFactGroup             () { return &_terrainFactGroup; }
     FactGroup* hygrometerFactGroup          () { return &_hygrometerFactGroup; }
@@ -1426,6 +1429,7 @@ private:
     VehicleLocalPositionFactGroup   _localPositionFactGroup;
     VehicleLocalPositionSetpointFactGroup _localPositionSetpointFactGroup;
     VehicleEscStatusFactGroup       _escStatusFactGroup;
+    VehicleServoOutputFactGroup     _servoOutputFactGroup;
     VehicleEstimatorStatusFactGroup _estimatorStatusFactGroup;
     VehicleHygrometerFactGroup      _hygrometerFactGroup;
     VehicleGeneratorFactGroup       _generatorFactGroup;
@@ -1487,6 +1491,7 @@ private:
     static const char* _localPositionFactGroupName;
     static const char* _localPositionSetpointFactGroupName;
     static const char* _escStatusFactGroupName;
+    static const char* _servoOutputFactGroupName;
     static const char* _estimatorStatusFactGroupName;
     static const char* _hygrometerFactGroupName;
     static const char* _generatorFactGroupName;

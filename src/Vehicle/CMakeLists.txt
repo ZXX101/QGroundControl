@@ -77,6 +77,8 @@ add_library(Vehicle
 	VehicleEFIFactGroup.h
 	VehicleEscStatusFactGroup.cc
 	VehicleEscStatusFactGroup.h
+	VehicleServoOutputFactGroup.cc
+	VehicleServoOutputFactGroup.h
 	VehicleEstimatorStatusFactGroup.cc
 	VehicleEstimatorStatusFactGroup.h
 	VehicleLocalPositionFactGroup.cc
