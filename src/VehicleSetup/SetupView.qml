@@ -274,8 +274,8 @@ Rectangle {
 
             Repeater {
                 id:     componentRepeater
-                model:  _fullParameterVehicleAvailable ? QGroundControl.multiVehicleManager.activeVehicle.autopilot.vehicleComponents : 0
-
+                // model:  _fullParameterVehicleAvailable ? c : 0
+                model: _fullParameterVehicleAvailable ? QGroundControl.multiVehicleManager.activeVehicle.autopilot.vehicleComponents : 0
                 SubMenuButton {
                     imageResource:      modelData.iconResource
                     setupIndicator:     modelData.requiresSetup

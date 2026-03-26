@@ -93,6 +93,12 @@ ApplicationWindow {
 
         // Property to manage RemoteID quick acces to settings page
         property bool               commingFromRIDIndicator:        false
+
+        //电机测试设置
+        property int motorTestThrottle: 12
+        property int motorTestTime:600
+
+        // signal motorTestSettingReceived(int throttleVal , int times)
     }
 
     /// Default color palette used throughout the UI
@@ -269,6 +275,11 @@ ApplicationWindow {
         id:         toolbar
         height:     ScreenTools.toolbarHeight
         visible:    !(QGroundControl.videoManager.fullScreen && flightView.visible)
+
+        onMotorTestSettingChanged:{
+            globals.motorTestThrottle = throttleVal
+            globals.motorTestTims = times
+        }
     }
 
     footer: LogReplayStatusBar {

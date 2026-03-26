@@ -1,9 +1,60 @@
 import QtQuick 2.11
+import QtQuick.Layouts 1.11
 
-/*
-  两个标签路径qrc:/qmlimages/resources/customFlyviewOverLay/高度.png，qrc:/qmlimages/resources/customFlyviewOverLay/距离.png。
-  在这个文件实现一个组件，其中有四个元素：一个图标，一个标签并排在上半部分，中间一个横向分隔符，下半部分为一个标签
-  两个标签都要根据传入的变量更新数据，图标要能自由设置
-  这个组件要创建两个实例，所以不能有冲突
-  你只需要实现并说明实例化以及设置图片和更新标签数据的方法
-  */
+import QGroundControl 1.0
+import QGroundControl.Controls 1.0
+import QGroundControl.ScreenTools 1.0
+import QGroundControl.Palette 1.0
+
+Column {
+    id: root
+    spacing: 4
+    width: 200
+    height: 200
+
+    property alias iconSource: iconImage.source
+    property alias topLabelText: topLabel.text
+    property alias bottomLabelText: bottomLabel.text
+
+    Item { height: 20; width: 1 }
+
+    Row {
+        spacing: 8
+        anchors.horizontalCenter: parent.horizontalCenter
+        height: 40
+
+        Image {
+            id: iconImage
+            width: 32
+            height: 32
+            fillMode: Image.PreserveAspectFit
+            anchors.verticalCenter: parent.verticalCenter
+        }
+
+        QGCLabel {
+            id: topLabel
+            font.pointSize: ScreenTools.mediumFontPointSize
+            color: "white"
+            anchors.verticalCenter: parent.verticalCenter
+
+        }
+    }
+
+    Item { height: 10; width: 1 }
+
+    Rectangle {
+        width: parent.width * 0.8
+        height: 2
+        color: "white"
+        anchors.horizontalCenter: parent.horizontalCenter
+    }
+
+    Item { height: 10; width: 1 }
+
+    QGCLabel {
+        id: bottomLabel
+        font.pointSize: ScreenTools.mediumFontPointSize
+        color: "white"
+        anchors.horizontalCenter: parent.horizontalCenter
+    }
+}

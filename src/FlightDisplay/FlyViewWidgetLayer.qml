@@ -61,7 +61,7 @@ Item {
         // topEdgeRightInset:      instrumentPanel.topEdgeRightInset
         bottomEdgeLeftInset:    virtualJoystickMultiTouch.visible ? virtualJoystickMultiTouch.bottomEdgeLeftInset : parentToolInsets.bottomEdgeLeftInset
         // bottomEdgeCenterInset:  telemetryPanel.bottomEdgeCenterInset
-        bottomEdgeCenterInset:  instrumentPanel.bottomEdgeCenterInset
+        // bottomEdgeCenterInset:  instrumentPanel.bottomEdgeCenterInset
         bottomEdgeRightInset:   virtualJoystickMultiTouch.visible ? virtualJoystickMultiTouch.bottomEdgeRightInset : parentToolInsets.bottomEdgeRightInset
     }
 
@@ -132,6 +132,29 @@ Item {
         property real topEdgeRightInset: visible ? y + height : 0
         property real bottomEdgetCenterInset: visible ? parent.height -y : 0
 
+    }
+    //下方左侧上升速度和高度
+    FlyViewCustomMultiIconWithLable{
+        id: heightAndVSpeedLabel
+        anchors.right: instrumentPanel.left
+        anchors.bottom: instrumentPanel.bottom
+        iconSource: "qrc:/qmlimages/resources/customFlyviewOverLay/高度.png"
+        //垂直速度(爬升速度)
+        topLabelText: _activeVehicle ? _activeVehicle.climbRate.valueString+"m/s":"0.0m/s"
+        //对地高度
+        bottomLabelText: _activeVehicle ? _activeVehicle.altitudeRelative.valueString+"m":"0.0m"
+    }
+
+    // //下方右侧水平速度和离家距离
+    FlyViewCustomMultiIconWithLable{
+        id: disHomAndHSpeedLabel
+        anchors.left: instrumentPanel.right
+        anchors.bottom: instrumentPanel.bottom
+        iconSource: "qrc:/qmlimages/resources/customFlyviewOverLay/距离.png"
+        //水平速度(对地速度)
+        topLabelText: _activeVehicle ? _activeVehicle.groundSpeed.valueString+"m/s":"0.0m/s"
+        //对地高度
+        bottomLabelText: _activeVehicle ? _activeVehicle.distanceToHome.valueString+"m":"0.0m"
     }
 
     PhotoVideoControl {

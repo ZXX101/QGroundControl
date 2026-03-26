@@ -34,6 +34,7 @@ Rectangle {
     property var    _activeVehicle:     QGroundControl.multiVehicleManager.activeVehicle
     property bool   _communicationLost: _activeVehicle ? _activeVehicle.vehicleLinkManager.communicationLost : false
     property color  _mainStatusBGColor: qgcPal.brandingPurple
+    signal motorTestSettingChanged
 
     function dropMessageIndicatorTool() {
         if (currentToolbar === flyViewToolbar) {
@@ -87,8 +88,8 @@ Rectangle {
         //飞行模式切换菜单
         MainStatusIndicator {
             Layout.preferredHeight: viewButtonRow.height
-            // visible:                currentToolbar === flyViewToolbar
-            visible: false
+            visible:                currentToolbar === flyViewToolbar
+            // visible: false
         }
 
         QGCButton {

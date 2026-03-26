@@ -1,5 +1,6 @@
 import QtQuick 2.11
 import QtQuick.Layouts 1.11
+import QtQuick.Controls 2.15
 
 import QGroundControl 1.0
 import QGroundControl.Controls 1.0
@@ -10,6 +11,8 @@ import QGroundControl.MultiVehicleManager 1.0
 Row {
     id: root
     spacing: ScreenTools.defaultFontPixelWidth
+
+    signal motorTestSettingChanged(int throttleVal,int times)
 
     property var _activeVehicle: QGroundControl.multiVehicleManager.activeVehicle
     property bool _isReturning: _activeVehicle ? (_activeVehicle.flightMode === _activeVehicle.rtlFlightMode || _activeVehicle.flightMode === _activeVehicle.smartRTLFlightMode) : false
@@ -128,6 +131,7 @@ Row {
 
     // 日期时间
     QGCLabel {
+        id: datetimeLabel
         text: Qt.formatDateTime(new Date(), "yyyy-MM-dd hh:mm:ss")
         color: qgcPal.text
         font.pointSize: ScreenTools.mediumFontPointSize
@@ -139,6 +143,71 @@ Row {
             repeat: true
             onTriggered: parent.text = Qt.formatDateTime(new Date(), "yyyy-MM-dd hh:mm:ss")
         }
+        MouseArea {
+            id: hidedMotorTestSetupButton
+            anchors.fill: parent
+
+            onClicked: {
+
+                motorTestSetupDialog.open()
+            }
+        }
+    }
+
+    //打开电机测试界面的隐藏按钮
+    //放在maintoolbar的时间标签上
+
+
+
+    Dialog {
+        id: motorTestSetupDialog
+        title: "电机测试参数设置"
+        modal: true
+        standardButtons: Dialog.Ok | Dialog.Cancel
+
+        GridLayout {
+            anchors.fill: parent
+            anchors.margins: 10
+            columnSpacing: 10
+            rowSpacing: 16
+            columns: 2  // 两列布局：标签 | 控件
+            Text {
+                text: "油门（%）："
+                verticalAlignment: Text.AlignVCenter
+            }
+
+            SpinBox {
+                id: throttleVal
+                width: 90
+                from: 0
+                to:100
+                value: 12
+            }
+
+            Text {
+                text: "时间（秒）："
+                verticalAlignment: Text.AlignVCenter
+            }
+
+            SpinBox {
+                id: continueTimeVal
+                from:1
+                to:600
+                width: 90
+                value: 600
+            }
+        }
+
+
+        onAccepted: {
+            console.log("设置参数",throttleVal.value,continueTimeVal.value)
+            globals.motorTestThrottle = throttleVal.value
+            globals.motorTestTime = continueTimeVal.value  // 注意拼写
+            // globals.motorTestSettingReceived(throttleVal.value, continueTimeVal.value)
+
+        }
+
+
     }
 
     QGCPalette { id: qgcPal }

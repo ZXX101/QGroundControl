@@ -122,6 +122,7 @@ SetupPage {
                 text:           qsTr("Moving the sliders will causes the motors to spin. Make sure you remove all props.")
             }
 
+            //滑块开关和标签
             Row {
                 spacing: ScreenTools.defaultFontPixelWidth
 
