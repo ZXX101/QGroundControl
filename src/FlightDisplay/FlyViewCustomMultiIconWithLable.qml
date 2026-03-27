@@ -33,7 +33,9 @@ Column {
 
         QGCLabel {
             id: topLabel
-            font.pointSize: ScreenTools.mediumFontPointSize
+            font.pointSize:  ScreenTools.largeFontPointSize*2
+
+            font.family:            tecentfont.name
             color: "white"
             anchors.verticalCenter: parent.verticalCenter
 
@@ -53,7 +55,8 @@ Column {
 
     QGCLabel {
         id: bottomLabel
-        font.pointSize: ScreenTools.mediumFontPointSize
+        font.pointSize:  ScreenTools.largeFontPointSize*2
+        font.family:            tecentfont.name
         color: "white"
         anchors.horizontalCenter: parent.horizontalCenter
     }

@@ -122,13 +122,13 @@ RowLayout {
         height:                 1
     }
 
-    FlightModeMenuIndicator {
-        id:                     flightModeMenu
-        Layout.preferredHeight: _root.height
-        fontPointSize:          _vehicleInAir ?  ScreenTools.largeFontPointSize : ScreenTools.defaultFontPointSize
-        // visible:                false
-        visible:                _activeVehicle
-    }
+    // FlightModeMenuIndicator {
+    //     id:                     flightModeMenu
+    //     Layout.preferredHeight: _root.height
+    //     fontPointSize:          _vehicleInAir ?  ScreenTools.largeFontPointSize : ScreenTools.defaultFontPointSize
+    //     // visible:                false
+    //     visible:                _activeVehicle
+    // }
 
     Item {
         Layout.preferredWidth:  ScreenTools.defaultFontPixelWidth * ScreenTools.largeFontPointRatio * 1.5

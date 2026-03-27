@@ -8,9 +8,15 @@ import QGroundControl.ScreenTools 1.0
 import QGroundControl.Palette 1.0
 import QGroundControl.MultiVehicleManager 1.0
 
-Row {
+RowLayout {
     id: root
-    spacing: ScreenTools.defaultFontPixelWidth
+    // spacing: ScreenTools.defaultFontPixelWidth
+
+    anchors.bottomMargin:   1
+    anchors.top:            parent.top
+    anchors.bottom:         parent.bottom
+    spacing:                ScreenTools.defaultFontPixelWidth / 2
+
 
     signal motorTestSettingChanged(int throttleVal,int times)
 
@@ -32,21 +38,28 @@ Row {
     property color batteryColorBad: "red"
 
     // 返航状态标签 + 分隔符
-    QGCLabel {
-        text: qsTr("返航中")
-        color: "orange"
-        font.bold: true
-        font.pointSize: ScreenTools.mediumFontPointSize
-        visible: _isReturning
-        anchors.verticalCenter: parent.verticalCenter
+    // QGCLabel {
+    //     text: qsTr("返航中")
+    //     color: "orange"
+    //     font.bold: true
+    //     font.pointSize: ScreenTools.mediumFontPointSize
+    //     visible: _isReturning
+    //     anchors.verticalCenter: parent.verticalCenter
+    // }
+
+    MainStatusIndicator {
+        Layout.preferredHeight: root.height
+        visible:                currentToolbar === flyViewToolbar
+        // visible: false
     }
+
 
     Rectangle {
         width: 1
         height: parent.height * 0.6
         color: qgcPal.text
-        visible: _isReturning
-        anchors.verticalCenter: parent.verticalCenter
+        // visible: _isReturning
+        // anchors.verticalCenter: parent.verticalCenter
     }
 
     // 卫星图标 + 数量
@@ -85,8 +98,8 @@ Row {
         width: 1
         height: parent.height * 0.6
         color: qgcPal.text
-        visible: _activeVehicle
-        anchors.verticalCenter: parent.verticalCenter
+        // visible: _activeVehicle
+        // anchors.verticalCenter: parent.verticalCenter
     }
 
     // 电池图标 + 电压
@@ -126,7 +139,7 @@ Row {
         height: parent.height * 0.6
         color: qgcPal.text
         visible: _activeVehicle
-        anchors.verticalCenter: parent.verticalCenter
+        // anchors.verticalCenter: parent.verticalCenter
     }
 
     // 日期时间
@@ -135,7 +148,7 @@ Row {
         text: Qt.formatDateTime(new Date(), "yyyy-MM-dd hh:mm:ss")
         color: qgcPal.text
         font.pointSize: ScreenTools.mediumFontPointSize
-        anchors.verticalCenter: parent.verticalCenter
+        // anchors.verticalCenter: parent.verticalCenter
 
         Timer {
             interval: 1000
@@ -192,7 +205,7 @@ Row {
             SpinBox {
                 id: continueTimeVal
                 from:1
-                to:600
+                to:60*60*12
                 width: 90
                 value: 600
             }

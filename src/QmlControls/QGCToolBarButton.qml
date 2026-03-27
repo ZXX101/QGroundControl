@@ -23,6 +23,12 @@ Button {
     height:             ScreenTools.defaultFontPixelHeight * 3
     leftPadding:        _horizontalMargin
     rightPadding:       _horizontalMargin
+    implicitWidth: {
+            var textWidth = _label.implicitWidth
+            var iconWidth = _icon.visible ? _icon.width : 0
+            var spacing = _icon.visible ? ScreenTools.defaultFontPixelWidth : 0
+            return leftPadding + rightPadding + textWidth + iconWidth + spacing
+        }
     checkable:          false
 
     property bool logo: false
@@ -61,15 +67,16 @@ Button {
             text:                   button.text
             anchors.left:           _icon.visible ? _icon.right : parent.left
             anchors.leftMargin:     _icon.visible ? ScreenTools.defaultFontPixelWidth : 0
-            anchors.right:          parent.right
+            // anchors.right:          parent.right
             anchors.top:            parent.top
             anchors.bottom:         parent.bottom
             font.family:            button.font.family
             font.bold:              button.font.bold
-            font.pixelSize:         height * 0.6
-            fontSizeMode:           Text.Fit
-            minimumPixelSize:       8
-            horizontalAlignment:    Text.AlignHCenter
+            font.pointSize:         button.font.pointSize
+            // font.pixelSize:         height * 0.6
+            // fontSizeMode:           Text.Fit
+            // minimumPixelSize:       8
+            horizontalAlignment:    text == "" ?  Text.AlignHCenter:Text.AlignLeft
             verticalAlignment:      Text.AlignVCenter
             color:                  button.checked ? qgcPal.buttonHighlightText : qgcPal.buttonText
         }

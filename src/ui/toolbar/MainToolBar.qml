@@ -23,7 +23,8 @@ import QGroundControl.Controllers           1.0
 
 Rectangle {
     id:     _root
-    color:  qgcPal.toolbarBackground
+    // color:  qgcPal.toolbarBackground
+    color:  "red"
 
     property int currentToolbar: flyViewToolbar
 
@@ -56,6 +57,7 @@ Rectangle {
 
     Rectangle {
         anchors.fill:   viewButtonRow
+        width:  viewButtonRow.width
         visible:        currentToolbar === flyViewToolbar
 
         gradient: Gradient {
@@ -71,25 +73,57 @@ Rectangle {
         anchors.bottomMargin:   1
         anchors.top:            parent.top
         anchors.bottom:         parent.bottom
+        anchors.left:           parent.left
         spacing:                ScreenTools.defaultFontPixelWidth / 2
+
+        Rectangle {
+            width: 1
+            height: parent.height * 0.6
+            color: qgcPal.text
+            // visible: _isReturning
+            // anchors.verticalCenter: parent.verticalCenter
+        }
 
         QGCToolBarButton {
             id:                     currentButton
+            Layout.fillHeight: true
             Layout.preferredHeight: viewButtonRow.height
-            Layout.preferredWidth:  ScreenTools.defaultFontPixelWidth * 12
+            Layout.minimumWidth: implicitWidth
+            // Layout.preferredWidth:  ScreenTools.defaultFontPixelWidth * 12
             text:                   "GPS 导航模式"
             font.family:            tecentfont.name
             font.bold:              true
+            font.pointSize:         ScreenTools.largeFontPointSize
+            // font.pixelSize:         height
             showIcon:               false
             // icon.source:            "/res/QGCLogoFull"
             // logo:                   true
             onClicked:              mainWindow.showToolSelectDialog()
         }
-        //飞行模式切换菜单
-        MainStatusIndicator {
-            Layout.preferredHeight: viewButtonRow.height
-            visible:                currentToolbar === flyViewToolbar
-            // visible: false
+
+        // Label {
+        //     text:  "TEST 测试"
+        //     font.family: tecentfont.name
+        //     Layout.fillHeight: true           // 添加
+        //     Layout.alignment: Qt.AlignVCenter // 添加
+        //     font.pointSize: ScreenTools.largeFontPointSize  // 设置字体大小
+        // }
+
+        //飞行模式切换菜单+状态指示器，指示器移动到右侧
+        // MainStatusIndicator {
+        //     Layout.preferredHeight: viewButtonRow.height
+        //     visible:                currentToolbar === flyViewToolbar
+        //     // visible: false
+        // }
+
+        //飞行模式切换菜单保持在左侧
+        FlightModeMenuIndicator {
+            id:                     flightModeMenu
+            Layout.preferredHeight: _root.height
+            fontPointSize:           ScreenTools.largeFontPointSize*1.5
+            // visible:                false
+            visible:                _activeVehicle
+            // anchors.verticalCenter: parent.verticalCenter
         }
 
         QGCButton {
@@ -130,7 +164,8 @@ Rectangle {
         anchors.rightMargin: ScreenTools.defaultFontPixelWidth
         anchors.top:        parent.top
         anchors.bottom:     parent.bottom
-        visible:            currentToolbar === flyViewToolbar && _activeVehicle
+        // visible:            currentToolbar === flyViewToolbar && _activeVehicle
+        visible:            true
     }
 
     //-------------------------------------------------------------------------
