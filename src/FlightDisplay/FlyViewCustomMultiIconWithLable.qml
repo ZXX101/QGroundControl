@@ -9,19 +9,16 @@ import QGroundControl.Palette 1.0
 Column {
     id: root
     spacing: 4
-    width: 200
-    height: 200
+
 
     property alias iconSource: iconImage.source
     property alias topLabelText: topLabel.text
     property alias bottomLabelText: bottomLabel.text
 
-    Item { height: 20; width: 1 }
-
     Row {
-        spacing: 8
+        id:toprow
+        spacing: 11
         anchors.horizontalCenter: parent.horizontalCenter
-        height: 40
 
         Image {
             id: iconImage
@@ -33,7 +30,7 @@ Column {
 
         QGCLabel {
             id: topLabel
-            font.pointSize:  ScreenTools.largeFontPointSize*2
+            font.pointSize:  ScreenTools.largeFontPointSize
 
             font.family:            tecentfont.name
             color: "white"
@@ -42,20 +39,20 @@ Column {
         }
     }
 
-    Item { height: 10; width: 1 }
+    // Item { height: 3; width: 1 }
 
     Rectangle {
-        width: parent.width * 0.8
-        height: 2
+        width: toprow.width
+        height: 1
         color: "white"
         anchors.horizontalCenter: parent.horizontalCenter
     }
 
-    Item { height: 10; width: 1 }
+    // Item { height: 3; width: 1 }
 
     QGCLabel {
         id: bottomLabel
-        font.pointSize:  ScreenTools.largeFontPointSize*2
+        font.pointSize:  ScreenTools.largeFontPointSize
         font.family:            tecentfont.name
         color: "white"
         anchors.horizontalCenter: parent.horizontalCenter

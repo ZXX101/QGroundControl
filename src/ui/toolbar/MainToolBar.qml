@@ -24,7 +24,7 @@ import QGroundControl.Controllers           1.0
 Rectangle {
     id:     _root
     // color:  qgcPal.toolbarBackground
-    color:  "red"
+    color:  "black"
 
     property int currentToolbar: flyViewToolbar
 
@@ -76,13 +76,13 @@ Rectangle {
         anchors.left:           parent.left
         spacing:                ScreenTools.defaultFontPixelWidth / 2
 
-        Rectangle {
-            width: 1
-            height: parent.height * 0.6
-            color: qgcPal.text
-            // visible: _isReturning
-            // anchors.verticalCenter: parent.verticalCenter
-        }
+        // Rectangle {
+        //     width: 1
+        //     height: parent.height * 0.6
+        //     color: qgcPal.text
+        //     // visible: _isReturning
+        //     // anchors.verticalCenter: parent.verticalCenter
+        // }
 
         QGCToolBarButton {
             id:                     currentButton

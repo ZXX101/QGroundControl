@@ -21,7 +21,7 @@ Item {
     property int _currentFrame: 0
 
     //圆角和背景
-    property real cornerRadius: 8
+    property real cornerRadius: 14
     property color borderColor: "white"
     property int borderWidth: 1
     property color backgroundColor: "black"
@@ -44,6 +44,7 @@ Item {
         fillMode: Image.PreserveAspectFit
         source: "qrc:/qmlimages/resources/customFlyviewOverLay/locked.png"
         visible: _isCompleted ? false:true
+        scale:0.5
         z: 0
     }
 
@@ -53,6 +54,7 @@ Item {
         fillMode: Image.PreserveAspectFit
         source: "qrc:/qmlimages/resources/customFlyviewOverLay/unlocked.png"
         visible: _isCompleted
+        scale:0.5
         z: 2
     }
 
@@ -64,7 +66,7 @@ Item {
         visible: _isPressed && !_isCompleted
         z: 1
         // 5位零填充帧号：按钮开_00000.png ~ 按钮开_00120.png
-        source: "qrc:/FlyViewUnlockButtonPNGSeq/resources/unlockAnime/按钮开_" +
+        source: "qrc:/flyviewUnlockBtnAnimSeq/resources/unlockAnime/unlock_" +
                 _currentFrame.toString().padStart(5, '0') + ".png"
     }
 

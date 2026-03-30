@@ -25,15 +25,15 @@ RowLayout {
 
     // 卫星阈值配置
     property int gpsThreshold: 6
-    property string gpsIconGood: "/qmlimages/Gps.svg"
-    property string gpsIconBad: "/qmlimages/Gps.svg"
+    property string gpsIconGood: "qrc:/qmlimages/resources/customFlyviewOverLay/gpsgood.png"
+    property string gpsIconBad: "qrc:/qmlimages/resources/customFlyviewOverLay/gpsbad.png"
     property color gpsColorGood: "white"
     property color gpsColorBad: "red"
 
     // 电池阈值配置（电压，单位V）
     property real voltageThreshold: 10.5
-    property string batteryIconGood: "/qmlimages/Battery.svg"
-    property string batteryIconBad: "/qmlimages/Battery.svg"
+    property string batteryIconGood: "qrc:/qmlimages/resources/customFlyviewOverLay/voltagegood.png"
+    property string batteryIconBad: "qrc:/qmlimages/resources/customFlyviewOverLay/voltagebad.png"
     property color batteryColorGood: "white"
     property color batteryColorBad: "red"
 
@@ -79,7 +79,7 @@ RowLayout {
             anchors.verticalCenter: parent.verticalCenter
             source: parent._isGood ? gpsIconGood : gpsIconBad
             fillMode: Image.PreserveAspectFit
-            color: parent._isGood ? gpsColorGood : gpsColorBad
+            // color: parent._isGood ? gpsColorGood : gpsColorBad
         }
 
         QGCLabel {
@@ -119,7 +119,7 @@ RowLayout {
             anchors.verticalCenter: parent.verticalCenter
             source: parent._isGood ? batteryIconGood : batteryIconBad
             fillMode: Image.PreserveAspectFit
-            color: parent._isGood ? batteryColorGood : batteryColorBad
+            // color: parent._isGood ? batteryColorGood : batteryColorBad
         }
 
         QGCLabel {
@@ -148,6 +148,7 @@ RowLayout {
         text: Qt.formatDateTime(new Date(), "yyyy-MM-dd hh:mm:ss")
         color: qgcPal.text
         font.pointSize: ScreenTools.mediumFontPointSize
+        // font.family: tecentfont.name
         // anchors.verticalCenter: parent.verticalCenter
 
         Timer {
@@ -193,8 +194,8 @@ RowLayout {
                 id: throttleVal
                 width: 90
                 from: 0
-                to:100
-                value: 12
+                to:15
+                value: 0
             }
 
             Text {

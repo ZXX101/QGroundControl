@@ -21,10 +21,13 @@ import QtLocation 5.3
 import QtPositioning 5.3
 import QtQml.Models 2.1
 import QtQuick 2.12
-import QtQuick.Controls 2.4
-import QtQuick.Dialogs 1.3
+// import QtQuick.Controls 2.4
+
+import QtQuick.Controls 2.15
+// import QtQuick.Dialogs 1.3
 import QtQuick.Layouts 1.12
-import QtQuick.Window 2.2
+
+import QtQuick.Window 2.15
 
 // To implement a custom overlay copy this code to your own control in your custom code source. Then override the
 // FlyViewCustomLayer.qml resource with your own qml. See the custom example and documentation for details.
@@ -37,6 +40,13 @@ Item {
     property var mapControl
     // 保存 actuatorTest 引用供 Timer 使用
     property var _currentActuatorTest: null
+
+    // property real altitudeValue: linearStart
+
+    property var servo1
+    property var servo2
+    property var servo3
+    property var servo4
 
     function mapPercentToValue(actuator, percent) {
         if (percent === 0)
@@ -111,46 +121,88 @@ Item {
         running: false
         onTriggered: {
             if (globals.activeVehicle && globals.activeVehicle.servoOutput) {
-                var servo1 = globals.activeVehicle.servoOutput.servo1Raw ? globals.activeVehicle.servoOutput.servo1Raw.rawValue : 0
-                var servo2 = globals.activeVehicle.servoOutput.servo2Raw ? globals.activeVehicle.servoOutput.servo2Raw.rawValue : 0
-                var servo3 = globals.activeVehicle.servoOutput.servo3Raw ? globals.activeVehicle.servoOutput.servo3Raw.rawValue : 0
-                var servo4 = globals.activeVehicle.servoOutput.servo4Raw ? globals.activeVehicle.servoOutput.servo4Raw.rawValue : 0
+                servo1 = globals.activeVehicle.servoOutput.servo1Raw ? globals.activeVehicle.servoOutput.servo1Raw.rawValue : 0
+                servo2 = globals.activeVehicle.servoOutput.servo2Raw ? globals.activeVehicle.servoOutput.servo2Raw.rawValue : 0
+                servo3 = globals.activeVehicle.servoOutput.servo3Raw ? globals.activeVehicle.servoOutput.servo3Raw.rawValue : 0
+                servo4 = globals.activeVehicle.servoOutput.servo4Raw ? globals.activeVehicle.servoOutput.servo4Raw.rawValue : 0
 
-                console.log("Servo Output (PWM us) - S1:", servo1, "S2:", servo2, "S3:", servo3, "S4:", servo4)
+                // console.log("Servo Output (PWM us) - S1:", servo1, "S2:", servo2, "S3:", servo3, "S4:", servo4)
             }
         }
     }
 
-    //左侧高度刻度条
-    FlyViewCustomAnimMeter {
-        anchors.left: parent.left
+    // //左侧高度刻度条
+    // FlyViewCustomAnimMeter {
+    //     anchors.left: parent.left
+    //     anchors.verticalCenter: parent.verticalCenter
+    //     width: 80
+    //     height: 300
+    //     //ZTODO::
+    //     // value: vehicle.altitude.rawValue  // 绑定飞行器高度
+    //     minValue: 0
+    //     maxValue: 500
+    //     majorInterval: 100
+    //     minorInterval: 20
+    //     label: "H"
+    //     unit: "m"
+    // }
+
+    // //右侧离家距离刻度条
+    // FlyViewCustomAnimMeter {
+    //     anchors.right: unlockButton.left
+    //     anchors.verticalCenter: parent.verticalCenter
+    //     anchors.rightMargin: 50
+    //     width: 80
+    //     height: 300
+    //     // value: vehicle.altitude.rawValue  // 绑定飞行器高度
+    //     minValue: 0
+    //     maxValue: 500
+    //     majorInterval: 100
+    //     minorInterval: 20
+    //     label: "D"
+    //     unit: "m"
+    // }
+
+    FlyViewCustomAnimMeterLeftLb {
+        anchors.right: unlockButton.left
+
+        anchors.rightMargin: 20
         anchors.verticalCenter: parent.verticalCenter
-        width: 80
-        height: 300
-        //ZTODO::
-        // value: vehicle.altitude.rawValue  // 绑定飞行器高度
-        minValue: 0
-        maxValue: 500
+        width: 170
+        height: parent.height/2
+        value: _activeVehicle ?_activeVehicle.distanceToHome.valueString:0
+        biggerValue: 400
+        smallerValue: 0
         majorInterval: 100
         minorInterval: 20
+        fontpointsize: ScreenTools.largeFontPointSize
         label: "H"
         unit: "m"
+
+        // 使用已加载的字体
+        fontFamily: tecentfont.name
+        smallFontPointSize: 10
     }
 
-    //右侧离家距离刻度条
-    FlyViewCustomAnimMeter {
-        anchors.right: unlockButton.left
+    FlyViewCustomAnimMeterRightLb {
+        anchors.left: parent.left
+        anchors.rightMargin: 100
         anchors.verticalCenter: parent.verticalCenter
-        anchors.rightMargin: 50
-        width: 80
-        height: 300
-        // value: vehicle.altitude.rawValue  // 绑定飞行器高度
-        minValue: 0
-        maxValue: 500
+        width: 170
+        height: parent.height/2
+
+        value: _activeVehicle ?_activeVehicle.altitudeRelative.valueString:0
+        biggerValue: 400
+        smallerValue:0
         majorInterval: 100
         minorInterval: 20
+        fontpointsize: ScreenTools.largeFontPointSize
         label: "D"
         unit: "m"
+
+        // 使用已加载的字体
+        fontFamily: tecentfont.name
+        smallFontPointSize: 10
     }
 
     //右侧三个按钮
@@ -164,7 +216,8 @@ Item {
         anchors.rightMargin: 10
         anchors.bottom: lockButton.top
         anchors.bottomMargin: 10
-        totalDuration: 3000 // 3秒
+        totalDuration: 500 // 3秒
+        // totalDuration: 3000 // 3秒
         onStarted: {
             console.log("开始长按解锁")
             console.log("电机参数为：油门：", globals.motorTestThrottle, "时间：",
@@ -181,6 +234,10 @@ Item {
             // console.log("_actuatorTest:", _actuatorTest);
             // console.log("_actuatorTest.actuators.count:", _actuatorTest ? _actuatorTest.actuators.count : "N/A");
             // console.log("===================");
+            console.log("activeVehicle:", globals.activeVehicle ? "exists" : "null")
+            console.log("actuators object:", globals.activeVehicle && globals.activeVehicle.actuators ? "exists" : "null")
+            console.log("actuatorTest:", globals.activeVehicle && globals.activeVehicle.actuators && globals.activeVehicle.actuators.actuatorTest ? "exists" : "null")
+            console.log("actuators count:", globals.activeVehicle && globals.activeVehicle.actuators && globals.activeVehicle.actuators.actuatorTest && globals.activeVehicle.actuators.actuatorTest.actuators ? globals.activeVehicle.actuators.actuatorTest.actuators.count : 0)
             ///
             var actuatorTest = getActuatorTest()
             console.log("actuatorTest:", actuatorTest)
@@ -221,8 +278,8 @@ Item {
         anchors.rightMargin: 10
         anchors.bottom: layBtnlocation.top
         anchors.bottomMargin: 10
-        image1: "qrc:/qmlimages/resources/customFlyviewOverLay/起飞-1.png"
-        image2: "qrc:/qmlimages/resources/customFlyviewOverLay/降落-1.png"
+        image1: "qrc:/qmlimages/resources/customFlyviewOverLay/locked.png"
+        image2: "qrc:/qmlimages/resources/customFlyviewOverLay/locked.png"
         onClicked: {
             console.log("停止电机测试")
             unlockButton.reset()
@@ -265,8 +322,8 @@ Item {
         anchors.rightMargin: 10
         anchors.top: layBtnlocation.bottom
         anchors.topMargin: 10
-        image1: "qrc:/qmlimages/resources/customFlyviewOverLay/起飞-1.png"
-        image2: "qrc:/qmlimages/resources/customFlyviewOverLay/降落-1.png"
+        image1: "qrc:/qmlimages/resources/customFlyviewOverLay/takeoff.png"
+        image2: "qrc:/qmlimages/resources/customFlyviewOverLay/landing.png"
         onClicked: {
             console.log("起飞降落按钮点击：" + checked ? "起飞" : "降落")
         }
@@ -282,11 +339,39 @@ Item {
         anchors.rightMargin: 10
         anchors.top: landLunchButton.bottom
         anchors.topMargin: 10
-        image1: "qrc:/qmlimages/resources/customFlyviewOverLay/返回-1.png"
-        image2: "qrc:/qmlimages/resources/customFlyviewOverLay/返回-1.png"
+        image1: "qrc:/qmlimages/resources/customFlyviewOverLay/goback.png"
+        image2: "qrc:/qmlimages/resources/customFlyviewOverLay/goback.png"
         onClicked: {
             console.log("返航按钮点击")
         }
+    }
+
+
+    Rectangle {
+        id: motorTestShowchout
+        // title: "电机测试飞控输出"
+        width: 200
+        // height: 400
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: parent.top
+        // standardButtons: Dialog.Ok | Dialog.Cancel
+        ColumnLayout{
+            spacing: 4
+
+            Text {
+                text:"S1: "+servo1
+            }
+            Text {
+                text:"S2: "+servo2
+            }
+            Text {
+                text:"S3: "+servo3
+            }
+            Text {
+                text:"S4: "+servo4
+            }
+        }
+
     }
 
     // since this file is a placeholder for the custom layer in a standard build, we will just pass through the parent insets

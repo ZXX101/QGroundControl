@@ -122,23 +122,37 @@ Item {
         // anchors.top:                multiVehiclePanelSelector.visible ? multiVehiclePanelSelector.bottom : parent.top
         anchors.bottom:              parent.bottom
         anchors.horizontalCenter:   parent.horizontalCenter
-        width:                      _rightPanelWidth * 1.5
+        width:                      _rightPanelWidth * 1.2
         spacing:                    _toolsMargin
         visible:                    QGroundControl.corePlugin.options.flyView.showInstrumentPanel && multiVehiclePanelSelector.showSingleVehiclePanel
         // availableHeight:            parent.height - y - _toolsMargin
-        availableHeight:            y
+        availableHeight:            y/2
 
         property real rightEdgeTopInset: visible ? parent.width - x : 0
         property real topEdgeRightInset: visible ? y + height : 0
         property real bottomEdgetCenterInset: visible ? parent.height -y : 0
 
     }
+
+    Rectangle{
+        color: "transparent"
+        border.color: "red"
+        border.width: 1
+        anchors.fill: heightAndVSpeedLabel
+    }
+
     //下方左侧上升速度和高度
     FlyViewCustomMultiIconWithLable{
+
+
         id: heightAndVSpeedLabel
+        // width:                      _rightPanelWidth * 1.2
+        height: instrumentPanel.height/2
         anchors.right: instrumentPanel.left
-        anchors.bottom: instrumentPanel.bottom
-        iconSource: "qrc:/qmlimages/resources/customFlyviewOverLay/高度.png"
+        anchors.rightMargin: 30
+        anchors.bottom: parent.bottom
+        spacing:                    _toolsMargin
+        iconSource: "qrc:/qmlimages/resources/customFlyviewOverLay/height.png"
         //垂直速度(爬升速度)
         topLabelText: _activeVehicle ? _activeVehicle.climbRate.valueString+"m/s":"0.0m/s"
         //对地高度
@@ -149,8 +163,12 @@ Item {
     FlyViewCustomMultiIconWithLable{
         id: disHomAndHSpeedLabel
         anchors.left: instrumentPanel.right
-        anchors.bottom: instrumentPanel.bottom
-        iconSource: "qrc:/qmlimages/resources/customFlyviewOverLay/距离.png"
+        anchors.leftMargin: 30
+        anchors.bottom: parent.bottom
+        // width:                      _rightPanelWidth * 1.2
+        height: instrumentPanel.height/2
+        spacing:                    _toolsMargin
+        iconSource: "qrc:/qmlimages/resources/customFlyviewOverLay/distanceHome.png"
         //水平速度(对地速度)
         topLabelText: _activeVehicle ? _activeVehicle.groundSpeed.valueString+"m/s":"0.0m/s"
         //对地高度

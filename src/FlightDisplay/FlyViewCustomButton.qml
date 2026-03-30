@@ -29,6 +29,7 @@ Item {
         anchors.fill: parent
         anchors.margins: 4
         fillMode: Image.PreserveAspectFit
+        scale:0.5
         visible: !root.checked
     }
 
@@ -37,6 +38,7 @@ Item {
         anchors.fill: parent
         anchors.margins: 4
         fillMode: Image.PreserveAspectFit
+        scale:0.5
         visible: root.checked
     }
 

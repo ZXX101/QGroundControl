@@ -292,9 +292,10 @@
         <file alias="SetupParameterEditor.qml">src/VehicleSetup/SetupParameterEditor.qml</file>
         <file alias="SetupView.qml">src/VehicleSetup/SetupView.qml</file>
         <file alias="VehicleSummary.qml">src/VehicleSetup/VehicleSummary.qml</file>
-        <file alias="QGroundControl/FlightDisplay/FlyViewCustomAnimMeter.qml">src/FlightDisplay/FlyViewCustomAnimMeter.qml</file>
         <file alias="QGroundControl/FlightDisplay/FlyViewCustomMultiIconWithLable.qml">src/FlightDisplay/FlyViewCustomMultiIconWithLable.qml</file>
         <file alias="QGroundControl/Controls/MainToolBarCustomStatus.qml">src/ui/toolbar/MainToolBarCustomStatus.qml</file>
+        <file alias="QGroundControl/FlightDisplay/FlyViewCustomAnimMeterLeftLb.qml">src/FlightDisplay/FlyViewCustomAnimMeterLeftLb.qml</file>
+        <file alias="QGroundControl/FlightDisplay/FlyViewCustomAnimMeterRightLb.qml">src/FlightDisplay/FlyViewCustomAnimMeterRightLb.qml</file>
     </qresource>
     <qresource prefix="/FirstRunPromptDialogs">
         <file alias="OfflineVehicleFirstRunPrompt.qml">src/FirstRunPromptDialogs/OfflineVehicleFirstRunPrompt.qml</file>
