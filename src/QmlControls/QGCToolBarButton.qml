@@ -54,7 +54,7 @@ Button {
             anchors.left:           parent.left
             anchors.verticalCenter: parent.verticalCenter
             height:                 ScreenTools.defaultFontPixelHeight * 2
-            width:                  height
+            width:                  height*3
             sourceSize.height:      height
             fillMode:               Image.PreserveAspectFit
             color:                  logo ? "transparent" : (button.checked ? qgcPal.buttonHighlightText : qgcPal.buttonText)

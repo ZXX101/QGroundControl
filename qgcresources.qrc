@@ -60,6 +60,8 @@
         <file alias="GripperRelease.svg">resources/GripperRelease.svg</file>
         <file alias="GripperGrab.svg">resources/GripperGrab.svg</file>
         <file>resources/icons/qgroundcontrol.ico</file>
+        <file alias="GURUMALogoFull">resources/gurumalogo.svg</file>
+        <file alias="GURUMARect">resources/gurumaRect.png</file>
     </qresource>
     <qresource prefix="/res/firmware">
         <file alias="3drradio.png">resources/firmware/3drradio.png</file>

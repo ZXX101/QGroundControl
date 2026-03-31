@@ -139,6 +139,7 @@ Item {
         border.color: "red"
         border.width: 1
         anchors.fill: heightAndVSpeedLabel
+        visible: false
     }
 
     //下方左侧上升速度和高度

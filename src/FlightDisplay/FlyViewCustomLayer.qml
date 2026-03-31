@@ -47,6 +47,7 @@ Item {
     property var servo2
     property var servo3
     property var servo4
+    property bool showServoLabel: false
 
     function mapPercentToValue(actuator, percent) {
         if (percent === 0)
@@ -355,6 +356,7 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
         // standardButtons: Dialog.Ok | Dialog.Cancel
+        visible: showServoLabel
         ColumnLayout{
             spacing: 4
 

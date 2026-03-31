@@ -90,14 +90,14 @@ Rectangle {
             Layout.preferredHeight: viewButtonRow.height
             Layout.minimumWidth: implicitWidth
             // Layout.preferredWidth:  ScreenTools.defaultFontPixelWidth * 12
-            text:                   "GPS 导航模式"
-            font.family:            tecentfont.name
-            font.bold:              true
-            font.pointSize:         ScreenTools.largeFontPointSize
+            // text:                   "GPS 导航模式"
+            // font.family:            tecentfont.name
+            // font.bold:              true
+            // font.pointSize:         ScreenTools.largeFontPointSize
             // font.pixelSize:         height
-            showIcon:               false
-            // icon.source:            "/res/QGCLogoFull"
-            // logo:                   true
+            showIcon:               true
+            icon.source:            "/res/GURUMALogoFull"
+            logo:                   true
             onClicked:              mainWindow.showToolSelectDialog()
         }
 
