@@ -437,12 +437,14 @@ bool QGCCorePlugin::guidedActionsControllerLogging() const
 
 QString QGCCorePlugin::stableVersionCheckFileUrl() const
 {
-#ifdef QGC_CUSTOM_BUILD
     // Custom builds must override to turn on and provide their own location
     return QString();
-#else
-    return QString("https://s3-us-west-2.amazonaws.com/qgroundcontrol/latest/QGC.version.txt");
-#endif
+// #ifdef QGC_CUSTOM_BUILD
+//     // Custom builds must override to turn on and provide their own location
+//     return QString();
+// #else
+//     return QString("https://s3-us-west-2.amazonaws.com/qgroundcontrol/latest/QGC.version.txt");
+// #endif
 }
 
 const QVariantList& QGCCorePlugin::toolBarIndicators(void)

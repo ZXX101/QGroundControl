@@ -1,5 +1,5 @@
 /****************************************************************************
- *
+
  * (c) 2009-2020 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
  *
  * QGroundControl is licensed according to the terms in the file
@@ -20,19 +20,17 @@ import QGroundControl.ScreenTools   1.0
 import QGroundControl.FlightDisplay 1.0
 import QGroundControl.FlightMap     1.0
 
-/// @brief Native QML top level window
-/// All properties defined here are visible to all QML pages.
 ApplicationWindow {
     FontLoader {
         id: tecentfont;
         source: "qrc:/fonts/resources/fonts/tecentbold.ttf"
     }
     id:             mainWindow
-    // minimumWidth:   ScreenTools.isMobile ? Screen.width  : Math.min(ScreenTools.defaultFontPixelWidth * 100, Screen.width)
-    // minimumHeight:  ScreenTools.isMobile ? Screen.height : Math.min(ScreenTools.defaultFontPixelWidth * 50, Screen.height)
     width:1200
     height:800
     visible:        true
+
+    property bool _splashFinished: false
 
     Component.onCompleted: {
         //-- Full screen on mobile or tiny screens
@@ -45,6 +43,22 @@ ApplicationWindow {
 
         // Start the sequence of first run prompt(s)
         firstRunPromptManager.nextPrompt()
+    }
+
+    SplashAnimation {
+        id: splashAnimation
+        parent: Overlay.overlay
+        anchors.fill: parent
+        visible: !_splashFinished
+        z: 9999
+        
+        onAnimationFinished: {
+            _splashFinished = true
+        }
+        
+        Component.onCompleted: {
+            splashAnimation.start()
+        }
     }
 
     QtObject {
